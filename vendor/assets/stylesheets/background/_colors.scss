@@ -1,0 +1,68 @@
+$bg-hover: true !default;
+$bg-responsive: true !default;
+
+@if index($components, background-colors) {
+  @if $theme-colors != () {
+    @each $color, $value in $theme-colors {
+      $hover: "";
+
+      @if $bg-hover {
+        $hover: ", .hover\\:bg-#{"" + $color}:hover";
+      }
+
+      .#{map-get($classnames, background)}-#{"" + $color}
+      #{$hover} {
+        background-color: #{choose-variable-type($color)} #{$important};
+      }
+
+      $addme: add-to-apply-map(#{map-get($classnames, background)}-#{"" + $color}, "background-color", "#{$value}");
+    }
+  }
+
+  @if $full-colors {
+    @each $color in $colors {
+      $medium: map-get($colors-list, $color);
+
+      @each $shade, $value in $medium {
+        $hover: "";
+
+        @if $bg-hover {
+          $hover: ", .hover\\:#{map-get($classnames, background)}-#{"" + $color}-#{"" + $shade}:hover";
+        }
+
+        .#{map-get($classnames, background)}-#{"" + $color}-#{"" + $shade}
+        #{$hover} {
+          background-color: #{$value} #{$important};
+        }
+
+        $addme: add-to-apply-map(#{map-get($classnames, background)}-#{"" + $color}-#{"" + $shade}, "background-color", "#{$value}");
+      }
+    }
+  }
+
+  @if $bg-responsive {
+    @each $breakpoint, $breakpoint-value in $breakpoints {
+      @include breakpoint($breakpoint) {
+        @if $theme-colors != () {
+          @each $color, $value in $theme-colors {
+            .#{$breakpoint}\:#{map-get($classnames, background)}-#{"" + $color} {
+              background-color: #{choose-variable-type($color)} #{$important};
+            }
+          }
+        }
+
+        @if $full-colors {
+          @each $color in $colors {
+            $medium: map-get($colors-list, $color);
+
+            @each $shade, $value in $medium {
+              .#{$breakpoint}\:#{map-get($classnames, background)}-#{"" + $color}-#{"" + $shade} {
+                background-color: $value #{$important};
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

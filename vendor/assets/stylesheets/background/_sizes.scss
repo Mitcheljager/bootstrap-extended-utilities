@@ -1,0 +1,14 @@
+$background-sizes: (
+  cover
+  contain
+) !default;
+
+@if index($components, background-sizes) {
+  @each $value in $background-sizes {
+    .#{map-get($classnames, background)}-#{$value} {
+      background-size: $value #{$important};
+    }
+
+    $addme: add-to-apply-map(#{map-get($classnames, background)}-#{$value}, "background-size", "#{$value}");
+  }
+}

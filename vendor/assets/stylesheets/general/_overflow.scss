@@ -1,0 +1,32 @@
+$overflow-responsive: true !default;
+
+$overflow: (
+  visible,
+  hidden,
+  scroll,
+  auto,
+  initial,
+  inherit
+) !default;
+
+@if index($components, overflow) {
+  @each $property in $overflow {
+    .#{map-get($classnames, overflow)}-#{$property} {
+      overflow: $property #{$important};
+    }
+
+    $addme: add-to-apply-map(#{map-get($classnames, overflow)}-#{$property}, "overflow", "#{$property}");
+  }
+
+  @if $overflow-responsive {
+    @each $breakpoint, $breakpoint-value in $breakpoints {
+      @include breakpoint($breakpoint) {
+        @each $property in $overflow {
+          .#{$breakpoint}\:overflow-#{$property} {
+            overflow: $property #{$important};
+          }
+        }
+      }
+    }
+  }
+}

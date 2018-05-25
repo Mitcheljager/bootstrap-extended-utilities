@@ -1,0 +1,104 @@
+$flex-responsive: true !default;
+
+$flex: (
+  flex-direction,
+  flex-wrap,
+  align-items,
+  align-self,
+  justify-content
+) !default;
+
+$flex-list: (
+  "flex-direction": (
+    "class": "flex",
+    "values": (
+      row: "row",
+      row-reverse: "row-reverse",
+      column: "column",
+      column-reverse: "column-reverse",
+      unset: "unset"
+    )
+  ), "flex-wrap": (
+    "class": "flex",
+    "values": (
+      wrap: "wrap",
+      wrap-reverse: "wrap-reverse",
+      nowrap: "no-wrap"
+    )
+  ), "align-items": (
+    "class": "align",
+    "values": (
+      start: "flex-start",
+      end: "flex-end",
+      center: "center",
+      baseline: "baseline",
+      stretch: "stretch"
+    )
+  ), "align-self": (
+    "class": "align-self",
+    "values": (
+      start: "flex-start",
+      end: "flex-end",
+      center: "center",
+      baseline: "baseline",
+      stretch: "stretch"
+    )
+  ), "justify-content": (
+    "class": "justify",
+    "values": (
+      start: "flex-start",
+      end: "flex-end",
+      center: "center",
+      between: "space-between",
+      around: "space-around"
+    )
+  )
+);
+
+@if index($components, flex) {
+  @each $property in $flex {
+    $medium: map-get($flex-list, $property);
+    $classstart: "";
+
+    @each $name, $value in $medium {
+      @if $name == "class" {
+        $classstart: #{map-get($classnames, flex)}#{$value};
+      }
+
+      @if $name == "values" {
+        @each $value-name, $value-value in $value {
+          .#{$classstart}-#{$value-name} {
+            #{$property}: #{$value-value} #{$important};
+          }
+
+          $addme: add-to-apply-map(#{$classstart}-#{$value-name}, "#{$property}", "#{$value-value}");
+        }
+      }
+    }
+  }
+
+  @if $flex-responsive {
+    @each $breakpoint, $breakpoint-value in $breakpoints {
+      @include breakpoint($breakpoint) {
+        @each $property in $flex {
+          $medium: map-get($flex-list, $property);
+          $classstart: "";
+
+          @each $name, $value in $medium {
+            @if $name == "class" {
+              $classstart: #{$value};
+            }
+
+            @if $name == "values" {
+              @each $value-name, $value-value in $value {
+                .#{$breakpoint}\:#{$classstart}-#{$value-name} {
+                  #{$property}: #{$value-value} #{$important};
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

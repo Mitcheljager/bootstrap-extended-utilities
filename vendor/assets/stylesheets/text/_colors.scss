@@ -1,0 +1,41 @@
+$text-colors-hover: true !default;
+
+@if index($components, text-colors) {
+  @if $theme-colors != () {
+    @each $color, $value in $theme-colors {
+      $hover: "";
+
+      @if $text-colors-hover {
+        $hover: ", .hover\\:#{map-get($classnames, text)}-#{"" + $color}:hover";
+      }
+
+      .#{map-get($classnames, text)}-#{"" + $color}
+      #{$hover} {
+        color: #{choose-variable-type($color)} #{$important};
+      }
+
+      $addme: add-to-apply-map(#{map-get($classnames, text)}-#{"" + $color}, "color", "#{$value}");
+    }
+  }
+
+  @if $full-colors {
+    @each $color in $colors {
+      $medium: map-get($colors-list, $color);
+
+      @each $shade, $value in $medium {
+        $hover: "";
+
+        @if $text-colors-hover {
+          $hover: ", .hover\\:#{map-get($classnames, text)}-#{"" + $color}-#{"" + $shade}:hover";
+        }
+
+        .#{map-get($classnames, text)}-#{"" + $color}-#{"" + $shade}
+        #{$hover} {
+          color: $value #{$important};
+        }
+
+        $addme: add-to-apply-map(#{map-get($classnames, text)}-#{"" + $color}-#{"" + $shade}, "color", "#{$value}");
+      }
+    }
+  }
+}

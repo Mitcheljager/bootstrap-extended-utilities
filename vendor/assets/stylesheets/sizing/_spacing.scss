@@ -1,0 +1,136 @@
+$spacing-responsive: true !default;
+
+$spacing: (
+  0: 0,
+  1: .25rem,
+  2: .5rem,
+  3: 1rem,
+  4: 2rem,
+  5: 4rem,
+  auto: auto
+) !default;
+
+$spacing-locations: (
+  t: "top",
+  r: "right",
+  b: "bottom",
+  l: "left",
+  y: (
+    top: "top",
+    bottom: "bottom"
+  ), x: (
+    left: "left",
+    right: "right"
+  )
+) !default;
+
+$types: (
+  #{map-get($classnames, margin)}: margin,
+  #{map-get($classnames, padding)}: padding
+);
+
+@mixin paddingmargin($space, $value, $breakpoint: 0, $location: "", $location-value: "") {
+  $s: "";
+  $bp: "";
+  $l: "";
+
+  @each $type, $type-value in $types {
+    @if $breakpoint != 0 {
+      $bp: "#{$breakpoint}\\:";
+      $s: "-#{$space}";
+      $important: !important;
+    } @else {
+      $s: "-#{$space}";
+    }
+
+    @if $location != "" {
+      $l: "#{$location}";
+    }
+
+    .#{$bp}#{$type}#{$l}#{$s} {
+      @if type-of($location-value) == "map" {
+        $properties: ();
+        @each $loc, $loc-value in $location-value {
+          $sep: "-";
+
+          $map: (#{$type-value}#{$sep}#{$loc-value}: "");
+          $properties: map-merge($properties, $map);
+          #{$type-value}#{$sep}#{$loc-value}: #{choose-variable-type($space, $spacing, "space-")} #{$important};
+        }
+
+        @if $bp == "" {
+          $addme: add-to-apply-map(#{$bp}#{$type}#{$l}#{$s}, $properties, $value);
+        }
+      } @else {
+        $sep: "";
+        @if $location-value != "" {
+          $sep: "-";
+        }
+
+        #{$type-value}#{$sep}#{$location-value}: #{choose-variable-type($space, $spacing, "space-")} #{$important};
+
+        @if $bp == "" {
+          $addme: add-to-apply-map(#{$bp}#{$type}#{$l}#{$s}, "#{$type-value}#{$sep}#{$location-value}", "#{$value}");
+        }
+      }
+    }
+  }
+}
+
+@if index($components, spacing) {
+  @each $space, $value in $spacing {
+    @include paddingmargin($space, $value);
+
+    @each $location, $location-value in $spacing-locations {
+      @include paddingmargin($space, $value, 0, $location, $location-value);
+    }
+  }
+
+  @if $spacing-responsive {
+    @each $space, $value in $spacing {
+      @each $breakpoint, $breakpoint-value in $breakpoints {
+        @include breakpoint($breakpoint) {
+          @include paddingmargin($space, $value, $breakpoint);
+
+          @each $location, $location-value in $spacing-locations {
+            @include paddingmargin($space, $value, $breakpoint, $location, $location-value);
+          }
+        }
+      }
+    }
+  }
+
+  @each $space, $value in $spacing {
+    @if type-of($value) == "number" {
+      .-mx-#{$space} {
+        margin-left: $value * -1 #{$important};
+        margin-right: $value * -1 #{$important};
+      }
+
+      $addme: add-to-apply-map(-mx-#{$space}, ("margin-left": "", "margin-right": ""), "#{$value * -1}");
+    }
+  }
+
+  @if $spacing-responsive {
+    @each $breakpoint, $breakpoint-value in $breakpoints {
+      @include breakpoint($breakpoint) {
+        @each $space, $value in $spacing {
+          @if type-of($value) == "number" {
+            .#{$breakpoint}\:-mx-#{$space} {
+              margin-left: $value * -1 #{$important};
+              margin-right: $value * -1 #{$important};
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@if $css-variables {
+  :root {
+    @each $space, $value in $spacing {
+      --space-#{$space}: #{$value};
+    }
+  }
+}

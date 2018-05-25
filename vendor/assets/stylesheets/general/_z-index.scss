@@ -1,0 +1,19 @@
+$z-index: (
+  -1,
+  0,
+  1,
+  2,
+  3,
+  4,
+  5
+) !default;
+
+@if index($components, z-index) {
+  @each $value in $z-index {
+    .#{map-get($classnames, z-index)}-#{$value} {
+      z-index: $value #{$important};
+    }
+
+    $addme: add-to-apply-map(#{map-get($classnames, z-index)}-#{$value}, "z-index", "#{$value}");
+  }
+}
