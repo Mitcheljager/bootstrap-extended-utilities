@@ -1,7 +1,3 @@
-$apply-classes: () !global;
-
-$css-variables: false !default;
-
 $components: (
   transition,
   background-colors,
@@ -27,37 +23,3 @@ $components: (
   text-decoration,
   title-sizes
 ) !default;
-
-$classnames: () !default;
-
-$classnames-default: (
-  position: "",
-  display: "",
-  width: "w",
-  padding: "p",
-  margin: "m",
-  border: "b",
-  border-radius: "radius",
-  overflow: "overflow",
-  flex: "",
-  background: "bg",
-  text: "text",
-  font: "font",
-  transition: "transition",
-  shadow: "shadow",
-  z-index: "z"
-) !default;
-
-@each $type, $classname in $classnames-default {
-  @if not(map-has-key($classnames, $type)) {
-    $classnames: map-merge($classnames, ($type: $classname));
-  }
-}
-
-$important: true !default;
-
-@if $important == true {
-  $important: "!important" !global;
-} @else {
-  $important: "" !global;
-}
