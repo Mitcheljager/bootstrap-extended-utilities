@@ -1,5 +1,14 @@
 @import "variables";
 
-@import "general/opacity",
-        "general/position",
-        "general/z-index";
+@import "general/position",
+        "general/z-index",
+        "general/cursor",
+        "general/overflow";
+
+@import "color/opacity";
+
+@import "shadow/shadow";
+
+@import "sizing/sizes";
+
+@import "svg/svg";

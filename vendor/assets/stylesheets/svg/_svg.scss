@@ -1,0 +1,9 @@
+@if index($components, svg) {
+  .fill-current path {
+    fill: currentColor;
+  }
+
+  .stroke-current path {
+    stroke: currentColor;
+  }
+}

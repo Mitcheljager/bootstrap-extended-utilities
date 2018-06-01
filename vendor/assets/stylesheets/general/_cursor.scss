@@ -1,0 +1,25 @@
+@if index($components, cursor) {
+  $cursor-breakpoints: false !default;
+
+  $cursors: (
+    pointer
+  ) !default;
+
+  @each $cursor in $cursors {
+    .position-#{$cursor} {
+      position: $cursor !important;
+    }
+  }
+
+  @if $cursor-breakpoints {
+    @each $breakpoint, $breakpoint-value in $grid-breakpoints {
+      @include media-breakpoint-up($breakpoint) {
+        @each $cursor in $cursors {
+          .cursor-#{$breakpoint}-#{$cursor} {
+            position: $cursor !important;
+          }
+        }
+      }
+    }
+  }
+}

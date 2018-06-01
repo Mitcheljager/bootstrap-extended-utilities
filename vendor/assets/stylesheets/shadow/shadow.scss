@@ -1,0 +1,46 @@
+@if index($components, shadow) {
+  $shadow-hover: false !default;
+  $shadow-breakpoints: true !default;
+
+  $shadows: (
+    "": 0 .5rem 1rem rgba($black, .15),
+    sm: 0 .125rem .25rem rgba($black, .075),
+    lg: 0 1rem 3rem rgba($black, .175)
+  ) !default;
+
+  $hover: "";
+
+  @if $shadow-hover {
+    @each $shadow, $value in $shadows {
+      $separator: "";
+      @if $shadow {
+        $separator: "-";
+      }
+
+      .hover\:shadow#{$separator}#{$shadow}:hover {
+        box-shadow: #{$value} !important;
+      }
+    }
+  }
+
+  @if $shadow-breakpoints {
+    @each $breakpoint, $breakpoint-value in $grid-breakpoints {
+      @include media-breakpoint-up($breakpoint) {
+        @each $shadow, $value in $shadows {
+          $separator: "";
+          @if $shadow {
+            $separator: "-";
+          }
+
+          @if $shadow-hover {
+            $hover: ", .hover\\:shadow-#{$breakpoint}#{$separator}#{$shadow}:hover, .hover\\:shadow-#{$breakpoint}#{$separator}#{$shadow}:active";
+          }
+
+          .shadow-#{$breakpoint}#{$separator}#{$shadow}#{$hover} {
+            box-shadow: #{$value} !important;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+@if index($components, overflow) {
+  $overflow-breakpoints: true !default;
+
+  $overflow: (
+    visible,
+    hidden,
+    scroll,
+    auto,
+    initial,
+    inherit
+  ) !default;
+
+  @each $property in $overflow {
+    .overflow-#{$property} {
+      overflow: $property !important;
+    }
+  }
+
+  @if $overflow-breakpoints {
+    @each $breakpoint, $breakpoint-value in $grid-breakpoints {
+      @include media-breakpoint-up($breakpoint) {
+        @each $property in $overflow {
+          .overflow-#{$breakpoint}-#{$property} {
+            overflow: $property !important;
+          }
+        }
+      }
+    }
+  }
+}

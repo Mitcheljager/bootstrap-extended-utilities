@@ -1,0 +1,15 @@
+@if index($components, sizes) {
+  $sizes-breakpoints: true !default;
+
+  @if $sizes-breakpoints {
+    @each $breakpoint, $breakpoint-value in $grid-breakpoints {
+      @include media-breakpoint-up($breakpoint) {
+        @each $size, $value in $sizes {
+          .w-#{$breakpoint}-#{$size} {
+            width: $value !important;
+          }
+        }
+      }
+    }
+  }
+}

@@ -17,7 +17,7 @@
   }
 
   @if $z-index-breakpoints {
-    @each $breakpoint, $breakpoint-value in $container-max-widths {
+    @each $breakpoint, $breakpoint-value in $grid-breakpoints {
       @include media-breakpoint-up($breakpoint) {
         @each $z-index in $z-indexes {
           .z-#{$breakpoint}-#{$z-index} {

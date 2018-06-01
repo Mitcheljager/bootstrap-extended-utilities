@@ -1,4 +1,5 @@
 @if index($components, opacity) {
+  $opacity-hover: false !default;
   $opacity-breakpoints: true !default;
 
   $opacities: (
@@ -15,17 +16,27 @@
     100: 1
   ) !default;
 
+  $hover: "";
+
   @each $opacity, $value in $opacities {
-    .opacity-#{$opacity} {
+    @if $opacity-hover {
+      $hover: ", .hover\\:opacity-#{$opacity}:hover, .hover\\:opacity-#{$opacity}:active";
+    }
+
+    .opacity-#{$opacity}#{$hover} {
       opacity: $value !important;
     }
   }
 
   @if $opacity-breakpoints {
-    @each $breakpoint, $breakpoint-value in $container-max-widths {
+    @each $breakpoint, $breakpoint-value in $grid-breakpoints {
       @include media-breakpoint-up($breakpoint) {
         @each $opacity, $value in $opacities {
-          .opacity-#{$breakpoint}-#{$opacity} {
+          @if $opacity-hover {
+              $hover: ", .hover\\:opacity-#{$breakpoint}-#{$opacity}:hover, .hover\\:opacity-#{$breakpoint}-#{$opacity}:active";
+          }
+
+          .opacity-#{$breakpoint}-#{$opacity}#{$hover} {
             opacity: $value !important;
           }
         }
