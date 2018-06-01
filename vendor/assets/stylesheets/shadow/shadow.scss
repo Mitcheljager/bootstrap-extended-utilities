@@ -17,7 +17,7 @@
         $separator: "-";
       }
 
-      .hover\:shadow#{$separator}#{$shadow}:hover {
+      .hover\:shadow#{$separator}#{$shadow}:hover, .hover\:shadow#{$separator}#{$shadow}:active {
         box-shadow: #{$value} !important;
       }
     }

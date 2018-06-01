@@ -5,7 +5,9 @@
         "general/cursor",
         "general/overflow";
 
-@import "color/opacity";
+@import "color/background",
+        "color/opacity",
+        "color/text";
 
 @import "shadow/shadow";
 

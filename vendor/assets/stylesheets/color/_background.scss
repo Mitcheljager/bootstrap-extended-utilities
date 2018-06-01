@@ -1,0 +1,31 @@
+@if index($components, background-color) {
+  $background-color-hovers: false !default;
+  $background-color-breakpoints: true !default;
+
+  $hover: "";
+
+  @if $background-color-hovers {
+    @each $color, $value in $theme-colors {
+
+      .hover\:bg-#{$color}:hover {
+        background-color: #{$value} !important;
+      }
+    }
+  }
+
+  @if $background-color-breakpoints {
+    @each $breakpoint, $breakpoint-value in $grid-breakpoints {
+      @include media-breakpoint-up($breakpoint) {
+        @each $color, $value in $theme-colors {
+          @if $background-color-hovers {
+            $hover: ", .hover\\:bg-#{$breakpoint}-#{$color}:hover, .hover\\:bg-#{$breakpoint}-#{$color}:active";
+          }
+
+          .bg-#{$breakpoint}-#{$color}#{$hover} {
+            background-color: #{$value} !important;
+          }
+        }
+      }
+    }
+  }
+}

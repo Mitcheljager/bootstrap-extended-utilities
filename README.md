@@ -28,6 +28,7 @@ Each component can be turn on or off by adjusting the `$components` SCSS variabl
 
 ```
 $components: (
+  background-color,
   cursor,
   opacity,
   overflow,
@@ -35,6 +36,7 @@ $components: (
   shadow,
   sizes,
   svg,
+  text-color,
   z-index
 );
 ```
@@ -42,6 +44,9 @@ By default all components are turned on.
 
 Each component has their own variables that allow for further customization.
 ```
+  $background-color-hovers: false; // Toggle hovers for all Background colors in $theme-colors
+  $background-color-responsive: true; // Toggle breakpoints for background-color
+
   $cursor-breakpoints: false; // Toggle breakpoints for Cursor property
   $cursors: (
     pointer
@@ -89,6 +94,9 @@ Each component has their own variables that allow for further customization.
   ); // Add or remove Shadows. These are only hovers and breakpoints, as Bootstrap already offers the base classes.
 
   $sizes-breakpoints: true; // These are only breakpoints, as Bootstrpa already offers the base classes. The sizes can be changed with the Bootstrap variable $sizes.
+
+  $text-color-hovers: false; // Toggle hovers for all Text colors in $theme-colors
+  $text-color-responsive: true; // Toggle breakpoints for Text colors
 
   $z-index-breakpoints: false; // toggle breakpoints on z-index
   $z-indexes: (
