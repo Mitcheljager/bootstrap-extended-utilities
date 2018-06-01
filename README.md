@@ -16,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install bootstra-extended-utilities
+    $ gem install bootstrap-extended-utilities
 
 ## How to use
 
